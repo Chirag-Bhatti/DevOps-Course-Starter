@@ -20,6 +20,9 @@
       <ul class="list-group mb-4">
         {% for toDoItem in toDoItems %}
           <li>{{toDoItem.id}} - {{toDoItem.status}} - {{toDoItem.title}}</li>
+          <form action="/mark-completed" method="post">
+            <button name="complete" type="submit" value={{toDoItem.id}}>Complete</button>
+          </form>
         {% endfor %}
       </ul>
     </div>

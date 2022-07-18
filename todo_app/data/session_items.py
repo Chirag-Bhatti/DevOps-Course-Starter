@@ -67,3 +67,19 @@ def save_item(item):
     session['items'] = updated_items
 
     return item
+
+def complete_item(id):
+    """
+    Updates an existing in them the session to have a completed status.
+
+    Args:
+        id: The id of the item to update to completed.
+    """
+
+    item = get_item(id)
+
+    if item is None:
+        return
+    
+    item['status'] = "Completed"
+    save_item(item)
