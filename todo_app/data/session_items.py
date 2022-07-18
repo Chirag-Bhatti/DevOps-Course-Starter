@@ -70,7 +70,7 @@ def save_item(item):
 
 def complete_item(id):
     """
-    Updates an existing in them the session to have a completed status.
+    Updates an existing item in the session to have a completed status.
 
     Args:
         id: The id of the item to update to completed.
