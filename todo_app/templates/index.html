@@ -10,6 +10,13 @@
   <div class="row">
     <div class="col-md-12">
       <h2>Items</h2>
+      <form action="/add-todo-item" method="post" class="add-todo-item-form">
+        <div class="add-todo-item-form">
+          <label for="title">Title for new to-do item: </label>
+          <input type="text" name="title" id="title">
+          <input type="submit" value="Add">
+        </div>
+      </form>
       <ul class="list-group mb-4">
         {% for toDoItem in toDoItems %}
           <li>{{toDoItem.id}} - {{toDoItem.status}} - {{toDoItem.title}}</li>

@@ -1,5 +1,5 @@
-from flask import Flask, render_template
-from todo_app.data.session_items import get_items
+from flask import Flask, redirect, render_template, request
+from todo_app.data.session_items import add_item, get_items
 
 from todo_app.flask_config import Config
 
@@ -11,3 +11,9 @@ app.config.from_object(Config())
 def index():
     toDoItems = get_items()
     return render_template('index.html', toDoItems = toDoItems)
+
+@app.route('/add-todo-item', methods=['POST'])
+def addToDoItem():
+    title = request.form.get('title')
+    add_item(title)
+    return redirect('/')
