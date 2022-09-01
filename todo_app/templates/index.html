@@ -11,9 +11,9 @@
     <div class="col-md-12">
       <h2>Items</h2>
       <form action="/add-todo-item" method="post" class="add-todo-item-form">
-        <div class="add-todo-item-form">
+        <div>
           <label for="title">Title for new to-do item: </label>
-          <input type="text" name="title" id="title">
+          <input type="text" name="title" id="title" required>
           <input type="submit" value="Add">
         </div>
       </form>
@@ -21,7 +21,8 @@
         {% for toDoItem in toDoItems %}
           <li>{{toDoItem.id}} - {{toDoItem.status}} - {{toDoItem.title}}</li>
           <form action="/mark-completed" method="post">
-            <button name="complete" type="submit" value={{toDoItem.id}}>Complete</button>
+            <input type="hidden" name="item_id" value="{{toDoItem.id}}">
+            <button type="submit">Complete</button>
           </form>
         {% endfor %}
       </ul>
