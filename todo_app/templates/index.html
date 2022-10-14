@@ -12,14 +12,14 @@
       <h2>Items</h2>
       <form action="/add-todo-item" method="post" class="add-todo-item-form">
         <div>
-          <label for="title">Title for new to-do item: </label>
-          <input type="text" name="title" id="title" required>
+          <label for="name">Name for new to-do item: </label>
+          <input type="text" name="name" id="name" required>
           <input type="submit" value="Add">
         </div>
       </form>
       <ul class="list-group mb-4">
         {% for toDoItem in toDoItems %}
-          <li>{{toDoItem.id}} - {{toDoItem.status}} - {{toDoItem.title}}</li>
+          <li>{{toDoItem.id}} - {{toDoItem.status}} - {{toDoItem.name}}</li>
           <form action="/mark-completed" method="post">
             <input type="hidden" name="item_id" value="{{toDoItem.id}}">
             <button type="submit">Complete</button>

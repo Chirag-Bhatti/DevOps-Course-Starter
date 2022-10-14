@@ -1,5 +1,5 @@
 from flask import Flask, redirect, render_template, request
-from todo_app.data.session_items import add_item, complete_item, get_items
+from todo_app.data.trello_items import add_item, complete_item, get_items
 
 from todo_app.flask_config import Config
 
@@ -14,8 +14,8 @@ def index():
 
 @app.route('/add-todo-item', methods=['POST'])
 def add_to_do_item():
-    title = request.form.get('title')
-    add_item(title)
+    name = request.form.get('name')
+    add_item(name)
     return redirect('/')
 
 @app.route('/mark-completed', methods=['POST'])
