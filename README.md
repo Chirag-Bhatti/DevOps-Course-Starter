@@ -62,6 +62,25 @@ Finally, you will also need to attain the IDs of the done list and to do list on
 You can attain this by running a GET request to {API_BASE_URL}/1/boards/{BOARD_ID}/lists?key={API_KEY}&token={TOKEN} (using something like Postman), and copying the relevant ids
 
 &nbsp;
+## **Testing**
+
+The codebase uses the `pytest` framework for unit testing
+
+All the unit tests can be executed by running:
+```bash
+$ poetry run pytest
+```
+
+If you want to run tests from a single file, you can provide the path to it in the command instead e.g.
+```bash
+poetry run pytest todo_app/tests/test_view.py
+```
+
+You can also run tests interactively in VS Code by:
+- clicking the icon next to the test you want to run from the test code (this is normally a play icon, or a cross or tick if the test has been run already)
+- viewing the test panel by selecting the flask icon on the left hand side bar, which will show you the structure of the unit test and buttons to run / debug them (you can run invidual ones or groupings of tests)
+
+&nbsp;
 ## **Running the App**
 
 Once the all dependencies have been installed, start the Flask app in development mode within the Poetry environment by running:
