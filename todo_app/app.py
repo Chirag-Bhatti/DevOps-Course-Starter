@@ -6,7 +6,6 @@ from todo_app.flask_config import Config
 app = Flask(__name__)
 app.config.from_object(Config())
 
-
 @app.route('/')
 def index():
     to_do_items = get_items()

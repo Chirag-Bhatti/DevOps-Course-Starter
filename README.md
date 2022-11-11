@@ -51,9 +51,15 @@ After this, generate an API key and token, see instructions [here](https://trell
 
 Once you have these, save the API key and token generated on the `.env` file against the `API_KEY` and `TOKEN` variables
 
+Then locate the base url of the Trello API by trawling the docs [here](https://developer.atlassian.com/cloud/trello/rest/api-group-actions/) and save this against the `API_BASE_URL` variable (it is is expected to be or look like "https://api.trello.com")
+
 It would also be useful to attain the ID of the board you wish the program to use, and save this against the `BOARD_ID` variable
 
-You can attain this by running a GET request to https://api.trello.com/1/members/me/boards (using something like Postman), with the query parameters `key` and `token` set to those generated above to get your board(s), and copy the id of the one you want to use from the response
+You can attain this by running a GET request to {API_BASE_URL}/1/members/me/boards?key={API_KEY}&token={TOKEN} (using something like Postman), and copy the id of the one you want to use from the response
+
+Finally, you will also need to attain the IDs of the done list and to do list on the board, and save these against the `DONE_LIST_ID` and `TO_DO_LIST_ID` variables
+
+You can attain this by running a GET request to {API_BASE_URL}/1/boards/{BOARD_ID}/lists?key={API_KEY}&token={TOKEN} (using something like Postman), and copying the relevant ids
 
 &nbsp;
 ## **Running the App**
