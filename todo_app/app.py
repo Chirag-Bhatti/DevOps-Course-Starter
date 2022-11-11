@@ -4,23 +4,28 @@ from todo_app.data.trello_items import add_item, complete_item, get_items
 from todo_app.flask_config import Config
 from todo_app.view import ViewModel
 
-app = Flask(__name__)
-app.config.from_object(Config())
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object(Config())
 
-@app.route('/')
-def index():
-    items = get_items()
-    item_view_model = ViewModel(items)
-    return render_template('index.html', view_model = item_view_model)
+    @app.route('/')
+    def index():
+        items = get_items()
+        item_view_model = ViewModel(items)
+        return render_template('index.html', view_model = item_view_model)
 
-@app.route('/add-todo-item', methods=['POST'])
-def add_to_do_item():
-    name = request.form.get('name')
-    add_item(name)
-    return redirect('/')
+    @app.route('/add-todo-item', methods=['POST'])
+    def add_to_do_item():
+        name = request.form.get('name')
+        add_item(name)
+        return redirect('/')
 
-@app.route('/mark-completed', methods=['POST'])
-def mark_completed():
-    id = request.form.get('item_id')
-    complete_item(id)
-    return redirect('/')
+    @app.route('/mark-completed', methods=['POST'])
+    def mark_completed():
+        id = request.form.get('item_id')
+        complete_item(id)
+        return redirect('/')   
+
+    return app
+ 
+app = create_app()
