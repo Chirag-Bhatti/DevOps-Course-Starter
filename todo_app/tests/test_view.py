@@ -11,7 +11,7 @@ def test_items():
 
     return [todo_item, doing_item, done_item]
 
-def test_to_do_items(test_items):
+def test_todo_items(test_items):
     # Arrange
     view_model = ViewModel(test_items)
 
