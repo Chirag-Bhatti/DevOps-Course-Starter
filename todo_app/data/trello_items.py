@@ -2,15 +2,11 @@ import os
 import requests
 from todo_app.data.item import Item
 
-
-API_BASE_URL = os.getenv('API_BASE_URL')
-BOARD_ID = os.getenv('BOARD_ID')
-DONE_LIST_ID = os.getenv('DONE_LIST_ID')
-TO_DO_LIST_ID = os.getenv('TO_DO_LIST_ID')
-AUTH_QUERY_PARMS = {
-    'key': os.getenv('API_KEY'), 
-    'token': os.getenv('TOKEN')
-}
+def get_auth_query_params():
+    return {
+        'key': os.getenv('API_KEY'), 
+        'token': os.getenv('TOKEN')
+    }
 
 def get_items():
     """
@@ -19,11 +15,11 @@ def get_items():
     Returns:
         list: The open cards from the Trello board in the form of an Item
     """
-    customQueryParams = AUTH_QUERY_PARMS.copy()
+    customQueryParams = get_auth_query_params()
     customQueryParams['cards'] = 'open'
 
     response = requests.get(
-        API_BASE_URL + '/1/boards/{}/lists'.format(BOARD_ID), 
+        os.getenv('API_BASE_URL') + '/1/boards/{}/lists'.format(os.getenv('BOARD_ID')), 
         params=customQueryParams
     )
 
@@ -48,9 +44,9 @@ def add_item(title):
         item: The newly added Trello card's details
     """
     response = requests.post(
-        API_BASE_URL + '/1/cards', 
-        params=AUTH_QUERY_PARMS, 
-        data={'name': title, 'idList': TO_DO_LIST_ID}
+        os.getenv('API_BASE_URL') + '/1/cards', 
+        params=get_auth_query_params(), 
+        data={'name': title, 'idList': os.getenv('TO_DO_LIST_ID')}
     )
 
     if (response.status_code == requests.status_codes.codes.ok):
@@ -68,11 +64,11 @@ def complete_item(id):
     Returns:
         item: The completed Trello card's details
     """
-    customQueryParams = AUTH_QUERY_PARMS.copy()
-    customQueryParams['idList'] = DONE_LIST_ID
+    customQueryParams = get_auth_query_params().copy()
+    customQueryParams['idList'] = os.getenv('DONE_LIST_ID')
 
     response = requests.put(
-        API_BASE_URL + '/1/cards/{}'.format(id), 
+        os.getenv('API_BASE_URL') + '/1/cards/{}'.format(id), 
         params=customQueryParams
     )
 

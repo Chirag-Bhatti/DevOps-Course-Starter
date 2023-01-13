@@ -18,10 +18,10 @@
         </div>
       </form>
       <ul class="list-group mb-4">
-        {% for toDoItem in toDoItems %}
-          <li>{{toDoItem.id}} - {{toDoItem.status}} - {{toDoItem.name}}</li>
+        {% for item in view_model.items %}
+          <li>{{item.id}} - {{item.status}} - {{item.name}}</li>
           <form action="/mark-completed" method="post">
-            <input type="hidden" name="item_id" value="{{toDoItem.id}}">
+            <input type="hidden" name="item_id" value="{{item.id}}">
             <button type="submit">Complete</button>
           </form>
         {% endfor %}
