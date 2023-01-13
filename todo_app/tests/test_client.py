@@ -45,4 +45,4 @@ def test_index_page(monkeypatch, client):
     response = client.get('/')
 
     assert response.status_code == 200
-    assert 'Test card' in response.data.decode()
+    assert '<li>456 - To Do - Test card</li>' in response.data.decode()

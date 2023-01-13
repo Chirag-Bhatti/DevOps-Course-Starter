@@ -15,7 +15,7 @@ def get_items():
     Returns:
         list: The open cards from the Trello board in the form of an Item
     """
-    customQueryParams = get_auth_query_params().copy()
+    customQueryParams = get_auth_query_params()
     customQueryParams['cards'] = 'open'
 
     response = requests.get(
