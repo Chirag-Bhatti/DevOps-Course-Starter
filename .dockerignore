@@ -1,0 +1,8 @@
+.github
+.vscode
+.dockerignore
+.env
+.env.test
+Dockerfile
+my-ansible-inventory.yml
+my-ansible-playbook.yml
