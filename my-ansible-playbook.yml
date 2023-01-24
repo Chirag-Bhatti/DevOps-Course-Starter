@@ -5,15 +5,24 @@
   vars_prompt: 
     - name: secret_key
       prompt: What is the secret key
-      private: no # don't hide the user input
+
+    - name: api_base_url
+      prompt: What is the base url of the Trello API
+
+    - name: board_id
+      prompt: What is the id of the Trello board
+
+    - name: done_list_id
+      prompt: What is the id of the Trello done list
+
+    - name: to_do_list_id
+      prompt: What is the id of the Trello to do list
 
     - name: api_key
       prompt: what is the Trello API key?
-      private: no # don't hide the user input
 
     - name: token
       prompt: What is the Trello token?
-      private: no # don't hide the user input
 
   tasks:
   - name: Install Git using Yum package manager
@@ -42,7 +51,7 @@
   - name: Get latest version of code with Git
     ansible.builtin.git:
       repo: https://github.com/Chirag-Bhatti/DevOps-Course-Starter.git
-      version: main
+      version: main # use "exercise-4" branch if it hasn't been merged in
       dest: /opt/todoapp
 
   - name: Install project dependencies
