@@ -99,3 +99,28 @@ You should see output similar to the following:
  * Debugger PIN: 226-556-590
 ```
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
+
+&nbsp;
+## **Provisioning the app on a VM from an Ansible Control Node**
+At the root of the codebase, you should find an inventory and playbook for Ansible with the file names below
+```bash
+my-ansible.inventory.yml
+my-ansible.playbook.yml
+```
+
+Remote into your control node using SSH using a command like the below
+```bash
+ssh username@controller-ip-address
+```
+
+Copy the files into the control-node manually at the home directory
+
+Once done, run the following command from the home directory
+```bash
+ansible-playbook my-ansible-playbook.yml -i my-ansible-inventory.yml
+```
+
+If there are any issues and you wish to see a comprehensive output of the error, you can also run the command with the -vvv flag as below
+```bash
+ansible-playbook my-ansible-playbook.yml -i my-ansible-inventory.yml -vvv
+```
