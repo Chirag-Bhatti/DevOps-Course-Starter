@@ -146,5 +146,5 @@ For test (to run any unit and integration applicaton tests):
 ```bash
 docker build --target test --tag todo-app:test .
 
-docker run -d --env-file ./.env.test todo-app:test
+docker run --env-file ./.env.test todo-app:test
 ```
