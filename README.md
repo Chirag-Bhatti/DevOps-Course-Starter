@@ -144,7 +144,7 @@ docker run -d --env-file ./.env -p 8000:8000 todo-app:prod
 
 For test (to run any unit and integration applicaton tests):
 ```bash
-docker build --target test -- tag todo-app:test .
+docker build --target test --tag todo-app:test .
 
 docker run -d --env-file ./.env.test todo-app:test
 ```
