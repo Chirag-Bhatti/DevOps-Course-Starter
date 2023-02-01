@@ -11,20 +11,6 @@ WORKDIR /app
 RUN poetry install --no-root --no-dev
 
 
-FROM base as development
-
-RUN poetry install --no-root
-
-ENV FLASK_DEBUG=1
-
-RUN poetry install --no-root
-
-EXPOSE 5000
-
-ENTRYPOINT poetry run flask run --host=0.0.0.0
-
-
-
 FROM base as production
 
 COPY todo_app /app/todo_app/
@@ -32,3 +18,23 @@ COPY todo_app /app/todo_app/
 EXPOSE 8000
 
 ENTRYPOINT poetry run gunicorn --bind=0.0.0.0 "todo_app.app:create_app()"
+
+
+FROM base as development
+
+RUN poetry install --no-root
+
+ENV FLASK_DEBUG=1
+
+EXPOSE 5000
+
+ENTRYPOINT poetry run flask run --host=0.0.0.0
+
+
+FROM base as test
+
+RUN poetry install --no-root
+
+COPY todo_app /app/todo_app/
+
+ENTRYPOINT ["poetry", "run", "pytest"]
