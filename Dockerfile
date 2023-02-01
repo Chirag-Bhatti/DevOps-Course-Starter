@@ -6,15 +6,14 @@ ENV PATH=$PATH:/root/.local/share/pypoetry/venv/bin/
 
 COPY pyproject.toml poetry.toml /app/
 
-COPY .env.template /app/
-
 WORKDIR /app
 
-RUN cp .env.template .env
-
+RUN poetry install --no-root --no-dev
 
 
 FROM base as development
+
+RUN poetry install --no-root
 
 ENV FLASK_DEBUG=1
 
@@ -27,8 +26,6 @@ ENTRYPOINT poetry run flask run --host=0.0.0.0
 
 
 FROM base as production
-
-RUN poetry install --no-root --no-dev
 
 COPY todo_app /app/todo_app/
 

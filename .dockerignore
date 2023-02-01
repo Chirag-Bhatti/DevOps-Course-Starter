@@ -1,4 +1,5 @@
 .github
+.venv
 .vscode
 .dockerignore
 .env
@@ -6,3 +7,5 @@
 Dockerfile
 my-ansible-inventory.yml
 my-ansible-playbook.yml
+**/.pytest_cache
+**/__pycache__
