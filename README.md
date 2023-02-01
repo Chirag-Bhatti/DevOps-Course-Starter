@@ -124,3 +124,20 @@ If there are any issues and you wish to see a comprehensive output of the error,
 ```bash
 ansible-playbook my-ansible-playbook.yml -i my-ansible-inventory.yml -vvv
 ```
+
+## **Docker Containers**
+You can run a containerised version of the application using the commands below from the root of the project.
+Note that the source for the bind mount has to be an absolute path of the `todo_app` folder on your machine
+
+For development:
+```bash
+docker build --target development --tag todo-app:dev .
+
+docker run -d --env-file ./.env -p 8000:5000 --mount type=bind,source=C:/Users/chibha/Code/DevOpsWork/DevOps-Course-Starter/todo_app,target=/app/todo_app todo-app:dev 
+```
+For production:
+```bash
+docker build --target production --tag todo-app:prod .
+
+docker run -d --env-file ./.env -p 8000:8000 todo-app:prod
+```
