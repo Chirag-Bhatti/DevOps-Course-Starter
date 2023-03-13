@@ -1,0 +1,34 @@
+name: Continuous Integration
+on: 
+  push: 
+    paths-ignore:
+      - 'README.md'
+      - '.dockerignore'
+      - 'my-ansible-*.yml'
+      - '.pytest_cache'
+      - '.venv'
+      - '.env'
+      - '.vscode'
+      - '**/.pytest_cache'
+      - '**/__pycache__'
+  pull_request:
+    paths-ignore:
+      - 'README.md'
+      - '.dockerignore'
+      - 'my-ansible-*.yml'
+      - '.pytest_cache'
+      - '.venv'
+      - '.env'
+      - '.vscode'
+      - '**/__pycache__'
+      - '**/.pytest_cache'
+jobs:
+  build:
+    name: Build and test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the "test" docker image
+      run: docker build --target test --tag todo-app:test .
+    - name: Run the "test" docker image
+      run: docker run --env-file ./.env.test todo-app:test

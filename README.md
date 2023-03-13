@@ -127,7 +127,7 @@ ansible-playbook my-ansible-playbook.yml -i my-ansible-inventory.yml -vvv
 
 ## **Docker Containers**
 You can run a containerised version of the application using the commands below from the root of the project.
-Note that the source for the bind mount has to be an absolute path of the `todo_app` folder on your machine
+Note: the source for the bind mount has to be an absolute path of the `todo_app` folder on your machine
 
 For development:
 ```bash
@@ -140,4 +140,11 @@ For production:
 docker build --target production --tag todo-app:prod .
 
 docker run -d --env-file ./.env -p 8000:8000 todo-app:prod
+```
+
+For test (to run any unit and integration applicaton tests):
+```bash
+docker build --target test --tag todo-app:test .
+
+docker run --env-file ./.env.test todo-app:test
 ```
