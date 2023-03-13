@@ -5,11 +5,23 @@ on:
       - 'README.md'
       - '.dockerignore'
       - 'my-ansible-*.yml'
+      - '.pytest_cache'
+      - '.venv'
+      - '.env'
+      - '.vscode'
+      - '**/.pytest_cache'
+      - '**/__pycache__'
   pull_request:
     paths-ignore:
       - 'README.md'
       - '.dockerignore'
       - 'my-ansible-*.yml'
+      - '.pytest_cache'
+      - '.venv'
+      - '.env'
+      - '.vscode'
+      - '**/__pycache__'
+      - '**/.pytest_cache'
 jobs:
   build:
     name: Build and test
