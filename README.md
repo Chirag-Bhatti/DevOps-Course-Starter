@@ -148,3 +148,23 @@ docker build --target test --tag todo-app:test .
 
 docker run --env-file ./.env.test todo-app:test
 ```
+
+## **Putting image on Docker Hub Registry**
+You can put a docker image on your docker hub registry by doing the following
+
+Login into docker hub from the terminal
+```bash
+docker login
+```
+
+And build the image you want to store e.g.
+```bash
+docker build --target <build_phase> --tag <image_tag> .
+docker build --target production --tag cbhatti/todo-app:prod . # an example
+```
+
+And finally push the image by
+```bash
+docker push <image_tag>
+docker push cbhatti/todo-app:prod # an example
+```
