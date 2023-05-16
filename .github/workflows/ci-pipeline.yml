@@ -20,11 +20,11 @@ on:
       - '.venv'
       - '.env'
       - '.vscode'
-      - '**/__pycache__'
       - '**/.pytest_cache'
+      - '**/__pycache__'
 jobs:
-  build:
-    name: Build and test
+  job-one:
+    name: build-and-run-test
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -32,3 +32,11 @@ jobs:
       run: docker build --target test --tag todo-app:test .
     - name: Run the "test" docker image
       run: docker run --env-file ./.env.test todo-app:test
+  job-two:
+    name: Placeholder
+    needs: job-one
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name }} == 'push' && ${{ github.ref }} == 'refs/heads/exercise-9'
+    steps:
+    - name: Placeholder step
+      run: echo Publishing!
