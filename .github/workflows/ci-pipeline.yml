@@ -41,5 +41,10 @@ jobs:
       DOCKER_PASSWORD : '${{ secrets.DOCKER_PASSWORD }}'
     if: ${{ github.event_name }} == 'push' && ${{ github.ref }} == 'refs/heads/exercise-9'
     steps:
+    - uses: actions/checkout@v2
     - name: Docker login
       run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+    - name: Build the "production" docker image
+      run: docker build --target production --tag $DOCKER_USERNAME/todo-app:$GITHUB_SHA .
+    - name: Push the "production" docker image
+      run: docker push $DOCKER_USERNAME/todo-app:$GITHUB_SHA
