@@ -36,7 +36,10 @@ jobs:
     name: Placeholder
     needs: job-one
     runs-on: ubuntu-latest
+    env:
+      DOCKER_USERNAME : '${{ secrets.DOCKER_USERNAME }}'
+      DOCKER_PASSWORD : '${{ secrets.DOCKER_PASSWORD }}'
     if: ${{ github.event_name }} == 'push' && ${{ github.ref }} == 'refs/heads/exercise-9'
     steps:
-    - name: Placeholder step
-      run: echo Publishing!
+    - name: Docker login
+      run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
