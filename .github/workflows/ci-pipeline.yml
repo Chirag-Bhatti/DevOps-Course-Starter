@@ -33,7 +33,7 @@ jobs:
     - name: Run the "test" docker image
       run: docker run --env-file ./.env.test todo-app:test
   job-two:
-    name: Placeholder
+    name: deployment
     needs: job-one
     runs-on: ubuntu-latest
     env:
