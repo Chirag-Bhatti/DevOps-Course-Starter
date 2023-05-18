@@ -46,8 +46,8 @@ jobs:
     - name: Docker login
       run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
     - name: Build the "production" docker image
-      run: docker build --target production --tag $DOCKER_USERNAME/todo-app:$GITHUB_SHA .
+      run: docker build --target production --tag $DOCKER_USERNAME/todo-app:$GITHUB_SHA --tag $DOCKER_USERNAME/todo-app:prod .
     - name: Push the "production" docker image
-      run: docker push $DOCKER_USERNAME/todo-app:$GITHUB_SHA
+      run: docker push $DOCKER_USERNAME/todo-app:$GITHUB_SHA --all-tags
     - name: Release to Azure
       run: curl -dH -X POST https://'$'chibha-todo-app:$AZURE_WEBHOOK_URL_PASSWORD@chibha-todo-app.scm.azurewebsites.net/api/registry/webhook
