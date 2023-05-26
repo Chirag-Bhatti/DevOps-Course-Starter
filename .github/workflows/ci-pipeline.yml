@@ -20,11 +20,11 @@ on:
       - '.venv'
       - '.env'
       - '.vscode'
-      - '**/__pycache__'
       - '**/.pytest_cache'
+      - '**/__pycache__'
 jobs:
-  build:
-    name: Build and test
+  build-and-run-test:
+    name: build-and-run-test
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -32,3 +32,22 @@ jobs:
       run: docker build --target test --tag todo-app:test .
     - name: Run the "test" docker image
       run: docker run --env-file ./.env.test todo-app:test
+  deploy-prod:
+    name: deploy-prod
+    needs: job-one
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_USERNAME : '${{ secrets.DOCKER_USERNAME }}'
+      DOCKER_PASSWORD : '${{ secrets.DOCKER_PASSWORD }}'
+      AZURE_WEBHOOK_URL_PASSWORD : '${{ secrets.AZURE_WEBHOOK_URL_PASSWORD }}'
+    if: ${{ github.event_name }} == 'push' && ${{ github.ref }} == 'refs/heads/main'
+    steps:
+    - uses: actions/checkout@v2
+    - name: Docker login
+      run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+    - name: Build the "production" docker image
+      run: docker build --target production --tag $DOCKER_USERNAME/todo-app:$GITHUB_SHA --tag $DOCKER_USERNAME/todo-app:prod .
+    - name: Push the "production" docker image
+      run: docker push $DOCKER_USERNAME/todo-app --all-tags
+    - name: Release to Azure
+      run: curl -dH -X --fail POST https://'$'chibha-todo-app:$AZURE_WEBHOOK_URL_PASSWORD@chibha-todo-app.scm.azurewebsites.net/api/registry/webhook
