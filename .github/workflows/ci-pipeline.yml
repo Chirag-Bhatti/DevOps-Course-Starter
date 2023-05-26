@@ -34,7 +34,7 @@ jobs:
       run: docker run --env-file ./.env.test todo-app:test
   deploy-prod:
     name: deploy-prod
-    needs: job-one
+    needs: build-and-run-test
     runs-on: ubuntu-latest
     env:
       DOCKER_USERNAME : '${{ secrets.DOCKER_USERNAME }}'
