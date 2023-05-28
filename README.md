@@ -43,9 +43,15 @@ $ cp .env.template .env  # (first time only)
 The `.env` file is used by flask to set environment variables when running `flask run`. This enables things like development mode (which also enables features like hot reloading when you make a file change). There's also a [SECRET_KEY](https://flask.palletsprojects.com/en/1.1.x/config/#SECRET_KEY) variable which is used to encrypt the flask session cookie.
 
 &nbsp;
-### **Trello**
+### **DEPRECATED - Trello**
 
-The project uses the Trello API. You will need to sign up for an account [here](https://trello.com/signup) first 
+The project used a Trello Board and the Trello API to track tasks upto Exercise 9. On Exercise 10 it switched to using a Cosmos DB hosted in Azure instead. 
+
+The deprecated instructions below have been retained in case you need to go back to using Trello:
+
+---
+
+You will need to sign up for an account [here](https://trello.com/signup) first 
 
 After this, generate an API key and token, see instructions [here](https://trello.com/app-key)
 
@@ -64,9 +70,9 @@ You can attain this by running a GET request to {API_BASE_URL}/1/boards/{BOARD_I
 &nbsp;
 ## **Testing**
 
-The codebase uses the `pytest` framework for unit testing
+The codebase uses the `pytest` framework for testing
 
-All the unit tests can be executed by running:
+All the unit and integration tests can be executed by running:
 ```bash
 $ poetry run pytest
 ```

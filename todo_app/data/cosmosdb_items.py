@@ -16,7 +16,7 @@ def get_items():
     Fetches all the cards in the Cosmos DB
 
     Returns:
-        list: The open cards from the Trello board in the form of an Item
+        list: The tasks in the Cosmos DB in the form of an Item
     """
     task_collection = connect_to_task_collection()
 
@@ -52,10 +52,10 @@ def complete_item(id):
     Updates the status of a card from 'To Do' to 'Done'
 
     Args:
-        id: The Trello card id to be completed
+        id: The id of the task in the Cosmos DB to be completed
     
     Returns:
-        modified_count: The number of card's that were modified
+        modified_count: The number of tasks that were modified
     """
     task_collection = connect_to_task_collection()
 
