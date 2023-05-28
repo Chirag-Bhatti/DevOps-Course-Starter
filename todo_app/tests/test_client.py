@@ -16,11 +16,8 @@ def client():
         with test_app.test_client() as client:
             yield client
 
-def insertDummyData():
-    return add_item("Test Task")
-
 def test_index_page(monkeypatch, client):
-    id = insertDummyData()
+    id = add_item("Test Task")
     response = client.get('/')
 
     assert response.status_code == 200
