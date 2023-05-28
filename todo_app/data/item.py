@@ -5,8 +5,8 @@ class Item:
         self.status = status
 
     @classmethod
-    def from_trello_card(cls, card, list):
-        return cls(card['id'], card['name'], list['name'])
+    def from_cosmos_db(cls, task):
+        return cls(task['_id'], task['name'], task['status'])
 
     def __eq__(self, other):
         if not isinstance(other, Item):
