@@ -40,7 +40,6 @@ def add_item(title):
     """
     task_collection = connect_to_task_collection()
 
-
     task = {"name" : title, "status" : "To Do"}
 
     inserted_task = task_collection.insert_one(task)
