@@ -11,19 +11,23 @@
     <div class="col-md-12">
       <h2>Items</h2>
       <form action="/add-todo-item" method="post" class="add-todo-item-form">
-        <div>
-          <label for="name">Name for new to-do item: </label>
-          <input type="text" name="name" id="name" required>
-          <input type="submit" value="Add">
-        </div>
+        {% if user_role == 'writer' %}
+          <div>
+            <label for="name">Name for new to-do item: </label>
+            <input type="text" name="name" id="name" required>
+            <input type="submit" value="Add">
+          </div>
+        {% endif %}
       </form>
       <ul class="list-group mb-4">
         {% for item in view_model.items %}
           <li>{{item.id}} - {{item.status}} - {{item.name}}</li>
-          <form action="/mark-completed" method="post">
-            <input type="hidden" name="item_id" value="{{item.id}}">
-            <button type="submit">Complete</button>
-          </form>
+          {% if user_role == 'writer' %} 
+            <form action="/mark-completed" method="post">
+              <input type="hidden" name="item_id" value="{{item.id}}">
+              <button type="submit">Complete</button>
+            </form>
+          {% endif %}
         {% endfor %}
       </ul>
     </div>
