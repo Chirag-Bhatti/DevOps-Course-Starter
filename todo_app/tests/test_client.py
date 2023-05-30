@@ -16,7 +16,7 @@ def client():
         with test_app.test_client() as client:
             yield client
 
-def test_index_page(monkeypatch, client):
+def test_index_page(client):
     id = add_item("Test Task")
     response = client.get('/')
 
