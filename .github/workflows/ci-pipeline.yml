@@ -50,4 +50,4 @@ jobs:
     - name: Push the "production" docker image
       run: docker push $DOCKER_USERNAME/todo-app --all-tags
     - name: Release to Azure
-      run: curl -dH -X --fail POST https://'$'chibha-todo-app:$AZURE_WEBHOOK_URL_PASSWORD@chibha-todo-app.scm.azurewebsites.net/api/registry/webhook
+      run: curl --fail -dH -X POST https://'$'chibha-todo-app:$AZURE_WEBHOOK_URL_PASSWORD@chibha-todo-app.scm.azurewebsites.net/api/registry/webhook
