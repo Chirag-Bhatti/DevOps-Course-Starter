@@ -2,6 +2,7 @@ import os
 import requests
 from flask import Flask, abort, redirect, render_template, request
 from flask_login import LoginManager, current_user, login_required, login_user
+from functools import wraps
 from todo_app.data.cosmosdb_items import add_item, get_items, complete_item
 from todo_app.data.user import User
 from todo_app.flask_config import Config
@@ -42,10 +43,11 @@ def create_app():
         return user_roles.get(current_user.id)
 
     def check_user_role_is_writer(func):
-        def check_user_role():
+        @wraps(func)
+        def check_user_role(*args, **kwargs):
             current_user_role = get_current_user_role()
             if (current_user_role == 'writer'):
-                return func()
+                return func(*args, **kwargs)
             else: 
                 return abort(401)
         return check_user_role
