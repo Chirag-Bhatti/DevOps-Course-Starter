@@ -3,26 +3,11 @@
   remote_user: ec2-user
 
   vars_prompt: 
-    - name: secret_key
-      prompt: What is the secret key
+    - name: connection_string
+      prompt: What is the connection string of the Cosmos DB in Azure
 
-    - name: api_base_url
-      prompt: What is the base url of the Trello API
-
-    - name: board_id
-      prompt: What is the id of the Trello board
-
-    - name: done_list_id
-      prompt: What is the id of the Trello done list
-
-    - name: to_do_list_id
-      prompt: What is the id of the Trello to do list
-
-    - name: api_key
-      prompt: what is the Trello API key?
-
-    - name: token
-      prompt: What is the Trello token?
+    - name: db_name
+      prompt: What is the name of the database on the Cosmos DB in Azure
 
   tasks:
   - name: Install Git using Yum package manager

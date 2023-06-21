@@ -1,8 +1,8 @@
 from flask import Flask, redirect, render_template, request
-from todo_app.data.trello_items import add_item, complete_item, get_items
-
+from todo_app.data.cosmosdb_items import add_item, get_items, complete_item
 from todo_app.flask_config import Config
 from todo_app.view import ViewModel
+
 
 def create_app():
     app = Flask(__name__)
