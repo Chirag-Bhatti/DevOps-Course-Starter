@@ -16,9 +16,15 @@ def get_access_token_query_params():
 
 def create_app():
     app = Flask(__name__)
+
     app.config.from_object(Config())
+
+    app.config['LOG_LEVEL'] = os.getenv('LOG_LEVEL')
+    app.logger.setLevel(app.config['LOG_LEVEL'])
+
     login_disabled = os.getenv('LOGIN_DISABLED') == 'True'
     app.config['LOGIN_DISABLED'] = login_disabled
+    app.logger.debug(f'login disabled status is {login_disabled}')
 
     login_manager = LoginManager()
 
@@ -39,7 +45,10 @@ def create_app():
 
     def get_current_user_role():
         if (login_disabled):
+            app.logger.debug(f'login disabled - users have writer role')
             return 'writer'
+        
+        app.logger.debug(f'current user role is {user_roles.get(current_user.id)}')
         return user_roles.get(current_user.id)
 
     def check_user_role_is_writer(func):
@@ -48,13 +57,16 @@ def create_app():
             current_user_role = get_current_user_role()
             if (current_user_role == 'writer'):
                 return func(*args, **kwargs)
-            else: 
+            else:
+                app.logger.debug(f'current user role is not writer') 
                 return abort(401)
         return check_user_role
     
     @app.route('/')
     @login_required
     def index():
+        app.logger.info("getting to do items")
+
         items = get_items()
         item_view_model = ViewModel(items)
         current_user_role = get_current_user_role()
@@ -65,15 +77,23 @@ def create_app():
     @check_user_role_is_writer
     def add_to_do_item():
         name = request.form.get('name')
+        app.logger.info(f'adding to do item - {name}')
+
         add_item(name)
+        app.logger.info(f'added to do item - {name} successfully')
+
         return redirect('/')
 
     @app.route('/mark-completed', methods=['POST'], endpoint='func2')
     @login_required
     @check_user_role_is_writer
     def mark_completed():
-        id = request.form.get('item_id')
-        complete_item(id)
+        item = request.form.get('item_id')
+        app.logger.info(f'marking {item} as completed')
+
+        complete_item(item)
+        app.logger.info(f'marked {item} as completed successfully')
+
         return redirect('/')
 
     @app.route('/login/callback')
@@ -103,9 +123,12 @@ def create_app():
         user_id = user_info_response_json['id']
         user = User(user_id)
         logged_in_user = login_user(user)
+        app.logger.info(f'logged in {user.id} successfully')
 
         if (logged_in_user):
             return redirect('/')
+        
+        app.logger.warn(f'could not login user - {user}')
         return abort(500)
 
     return app
