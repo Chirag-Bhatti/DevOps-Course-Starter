@@ -42,8 +42,8 @@ resource "azurerm_linux_web_app" "main" {
 
   site_config {
     application_stack {
-      docker_image     = "cbhatti/todo-app"
-      docker_image_tag = "prod"
+      docker_image_name = "cbhatti/todo-app"
+      docker_image_tag  = "prod"
     }
   }
 
