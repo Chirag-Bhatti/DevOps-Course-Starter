@@ -40,6 +40,15 @@ jobs:
       DOCKER_USERNAME : '${{ secrets.DOCKER_USERNAME }}'
       DOCKER_PASSWORD : '${{ secrets.DOCKER_PASSWORD }}'
       AZURE_WEBHOOK_URL_PASSWORD : '${{ secrets.AZURE_WEBHOOK_URL_PASSWORD }}'
+      ARM_CLIENT_ID : '${{ secrets.ARM_CLIENT_ID }}'
+      ARM_CLIENT_SECRET : '${{ secrets.ARM_CLIENT_SECRET }}'
+      ARM_TENANT_ID: '${{ secrets.ARM_TENANT_ID }}'
+      ARM_SUBSCRIPTION_ID: '${{ secrets.ARM_SUBSCRIPTION_ID }}'
+      TF_VAR_client_id: ${{ secrets.TF_VAR_CLIENT_ID}}
+      TF_VAR_client_secret: ${{ secrets.TF_VAR_CLIENT_SECRET}}
+      TF_VAR_secret_key: ${{ secrets.TF_VAR_SECRET_KEY }}
+      TF_VAR_env: ${{ vars.TF_VAR_ENV }}
+      TF_VAR_prefix: ${{ vars.TF_VAR_PREFIX }}
     if: ${{ github.event_name }} == 'push' && ${{ github.ref }} == 'refs/heads/main'
     steps:
     - uses: actions/checkout@v2
@@ -49,5 +58,9 @@ jobs:
       run: docker build --target production --tag $DOCKER_USERNAME/todo-app:$GITHUB_SHA --tag $DOCKER_USERNAME/todo-app:prod .
     - name: Push the "production" docker image
       run: docker push $DOCKER_USERNAME/todo-app --all-tags
+    - name: Terraform init
+      run: terraform init
+    - name: Terraform apply
+      run: terraform apply -auto-approve
     - name: Release to Azure
-      run: curl --fail -dH -X POST https://'$'chibha-todo-app:$AZURE_WEBHOOK_URL_PASSWORD@chibha-todo-app.scm.azurewebsites.net/api/registry/webhook
+      run: curl --fail -dH -X POST "$(terraform output -raw cd_webhook)"

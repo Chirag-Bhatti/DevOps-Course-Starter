@@ -181,7 +181,7 @@ docker push cbhatti/todo-app:prod # an example
 ## **Manual Deployment to Azure**
 In order to restart the app and pull the latest version of the container image from the Docker Hub registry above, you can use the Webhook URL.
 
-The Webhook URL can be found under Deployment Center on the app service's page in the Azure Portal (click on the `chibha-todo-app` App Service first)
+The Webhook URL can be found under Deployment Center on the app service's page in the Azure Portal (click on the `chibha-ex12-production-linux-web-app` App Service first)
 
 You can then take the URL, and add in a backslash to escape the $ sign, so that in the a bash terminal you can run something like the following:
 
@@ -189,4 +189,9 @@ You can then take the URL, and add in a backslash to escape the $ sign, so that 
 curl -dH -X POST "https://\$<deployment_username>:<deployment_password>@<webapp_name>.scm.azurewebsites.net/docker/hook"
 ```
 
-This will return a link to a log-stream relating to the re-pulling of the image and restarting of the app
+You can also get the `cd_webhook` output generated when you run `terraform apply`, and then run the command below 
+```bash
+curl -dH -X POST "$(terraform output -raw cd_webhook)"
+```
+
+When running these commands, they will return a link to a log-stream relating to the re-pulling of the image and restarting of the app if sucessful
