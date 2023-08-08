@@ -3,6 +3,8 @@ import requests
 from flask import Flask, abort, redirect, render_template, request
 from flask_login import LoginManager, current_user, login_required, login_user
 from functools import wraps
+from loggly.handlers import HTTPSHandler
+from logging import Formatter
 from todo_app.data.cosmosdb_items import add_item, get_items, complete_item
 from todo_app.data.user import User
 from todo_app.flask_config import Config
@@ -21,6 +23,14 @@ def create_app():
 
     app.config['LOG_LEVEL'] = os.getenv('LOG_LEVEL')
     app.logger.setLevel(app.config['LOG_LEVEL'])
+
+    app.config['LOGGLY_TOKEN'] = os.getenv('LOGGLY_TOKEN')
+    if app.config['LOGGLY_TOKEN'] is not None:
+        handler = HTTPSHandler(f'https://logs-01.loggly.com/inputs/{app.config["LOGGLY_TOKEN"]}/tag/todo-app')
+        handler.setFormatter(
+            Formatter("[%(asctime)s] %(levelname)s in %(module)s: %(message)s")
+        )
+        app.logger.addHandler(handler)
 
     login_disabled = os.getenv('LOGIN_DISABLED') == 'True'
     app.config['LOGIN_DISABLED'] = login_disabled
