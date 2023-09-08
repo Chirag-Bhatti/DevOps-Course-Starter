@@ -46,8 +46,9 @@ jobs:
       ARM_SUBSCRIPTION_ID: '${{ secrets.ARM_SUBSCRIPTION_ID }}'
       TF_VAR_client_id: ${{ secrets.TF_VAR_CLIENT_ID}}
       TF_VAR_client_secret: ${{ secrets.TF_VAR_CLIENT_SECRET}}
-      TF_VAR_secret_key: ${{ secrets.TF_VAR_SECRET_KEY }}
       TF_VAR_env: ${{ vars.TF_VAR_ENV }}
+      TF_VAR_loggly_token: ${{ secrets.TF_VAR_LOGGLY_TOKEN }}
+      TF_VAR_secret_key: ${{ secrets.TF_VAR_SECRET_KEY }}
       TF_VAR_prefix: ${{ vars.TF_VAR_PREFIX }}
     if: ${{ github.event_name }} == 'push' && ${{ github.ref }} == 'refs/heads/main'
     steps:
