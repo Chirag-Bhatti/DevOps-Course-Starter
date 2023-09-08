@@ -195,3 +195,6 @@ curl -dH -X POST "$(terraform output -raw cd_webhook)"
 ```
 
 When running these commands, they will return a link to a log-stream relating to the re-pulling of the image and restarting of the app if sucessful
+
+## **Logging**
+

@@ -12,6 +12,11 @@ variable "env" {
   description = "The environment for all resources"
 }
 
+variable "loggly_token" {
+  description = "The token used for sending logs to loggly"
+  sensitive = true
+}
+
 variable "prefix" {
   default     = "chibha-ex12"
   description = "The prefix used for all resources in this environment"

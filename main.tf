@@ -54,6 +54,8 @@ resource "azurerm_linux_web_app" "main" {
     "DOCKER_REGISTRY_SERVER_URL"          = "https://index.docker.io"
     "FLASK_APP"                           = "todo_app/app"
     "FLASK_ENV"                           = var.env
+    "LOG_LEVEL"                           = "DEBUG"
+    "LOGGLY_TOKEN"                        = var.loggly_token
     "SECRET_KEY"                          = var.secret_key
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
   }
