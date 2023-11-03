@@ -195,3 +195,35 @@ curl -dH -X POST "$(terraform output -raw cd_webhook)"
 ```
 
 When running these commands, they will return a link to a log-stream relating to the re-pulling of the image and restarting of the app if sucessful
+
+## **Terraform**
+In order to update the Azure infrastructure used for running the deployed app, follow the steps below:
+
+First login to the Azure account by running the command:
+```bash
+az login
+```
+
+After this you can run terraform commands such as init and apply e.g.:
+```bash
+terraform init
+terraform apply
+```
+
+The terraform state is stored on a remote backend (using Azure Blob Storage)
+
+Note that terraform variables are setup as secrets / variables in the Github repo for the pipeline (which runs `terraform apply`), rather than a tfvars file we would have if running locally.
+
+## **Logging**
+You can set the kind of logs you want through the `LOG-LEVEL` environment variable. The options for this are:
+- DEBUG
+- INFO
+- WARNING
+- ERROR
+- CRITICAL
+
+Currently logs are sent to Loggly. We do this by providing our loggly token to the environment variable `LOGGLY_TOKEN`
+
+The token can be found if you go to login to loggly (domain is Softwire username), go to `Logs` -> `Source Setup` -> `Customer Tokens`
+
+You can then view any application logs in the `Log Explorer`

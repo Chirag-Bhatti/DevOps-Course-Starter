@@ -1,15 +1,22 @@
+import logging
 import pymongo
 import os
 from bson.objectid import ObjectId
 from todo_app.data.item import Item
 
+app_logger = logging.getLogger("todo_app.app")
 
 def connect_to_task_collection():
-    client = pymongo.MongoClient(os.getenv('CONNECTION_STRING'))
-    db_name = os.getenv('DB_NAME')
-    db = client[f'{db_name}']
-    task_collection = db['tasks']
-    return task_collection
+    try:
+        app_logger.debug("Attempting to connect to the DB")
+        client = pymongo.MongoClient(os.getenv('CONNECTION_STRING'))
+        db_name = os.getenv('DB_NAME')
+        db = client[f'{db_name}']
+        task_collection = db['tasks']
+        app_logger.debug("Successfully got the tasks from the DB")
+        return task_collection
+    except:
+        app_logger.critical("Could not connect to the DB")
 
 def get_items():
     """
