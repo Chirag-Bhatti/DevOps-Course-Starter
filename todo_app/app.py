@@ -21,7 +21,7 @@ def create_app():
 
     app.config.from_object(Config())
 
-    app.config['LOG_LEVEL'] = os.getenv('LOG_LEVEL')
+    app.config['LOG_LEVEL'] = os.getenv('LOG_LEVEL', 'DEBUG')
     app.logger.setLevel(app.config['LOG_LEVEL'])
 
     app.config['LOGGLY_TOKEN'] = os.getenv('LOGGLY_TOKEN')
@@ -87,10 +87,9 @@ def create_app():
     @check_user_role_is_writer
     def add_to_do_item():
         name = request.form.get('name')
-        app.logger.info(f'adding to do item - {name}')
 
         add_item(name)
-        app.logger.info(f'added to do item - {name} successfully')
+        app.logger.info('added to do item successfully')
 
         return redirect('/')
 

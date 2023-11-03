@@ -14,7 +14,12 @@ variable "env" {
 
 variable "loggly_token" {
   description = "The token used for sending logs to loggly"
-  sensitive = true
+  sensitive   = true
+}
+
+variable "log_level" {
+  description = "The level of logs to be kept"
+  default     = "DEBUG"
 }
 
 variable "prefix" {
